@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+:root {
+  --primary: #2563EB;
+  --secondary: #111827;
+  --accent: #F59E0B;
+  --background: #F8FAFC;
+  --foreground: #111827;
+}
+
+body {
+  font-family: var(--font-manrope), sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+}
