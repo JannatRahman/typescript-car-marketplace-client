@@ -1,12 +1,12 @@
-import Container from "../shared/Container";
-import SectionTitle from "../shared/SectionTitle";
-import CarCard from "../cards/CarCard";
-
+import Container from "@/components/shared/Container";
+import SectionTitle from "@/components/shared/SectionTitle";
+import CarCard from "@/components/cards/CarCard";
 import { getCars } from "@/services/car";
 import { Car } from "@/types/car";
 
 const FeaturedCars = async () => {
   const response = await getCars();
+
   const cars: Car[] = response.data;
 
   return (
@@ -20,7 +20,10 @@ const FeaturedCars = async () => {
 
         <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {cars.slice(0, 8).map((car) => (
-            <CarCard key={car._id} car={car} />
+            <CarCard
+              key={car._id}
+              car={car}
+            />
           ))}
         </div>
       </Container>

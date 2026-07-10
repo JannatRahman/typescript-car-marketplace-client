@@ -3,6 +3,8 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
@@ -26,6 +28,11 @@ export default function RootLayout({
       <body className={manrope.variable}>
         <Navbar />
         {children}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          theme="colored"
+        />
         <Footer />
       </body>
     </html>
