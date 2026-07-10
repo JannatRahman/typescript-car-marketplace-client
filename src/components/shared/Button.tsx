@@ -1,26 +1,22 @@
-import clsx from "clsx";
-import { ButtonHTMLAttributes, ReactNode } from "react";
-
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
+interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
   variant?: "primary" | "secondary";
 }
 
 const Button = ({
   children,
   variant = "primary",
-  className,
+  className = "",
   ...props
 }: ButtonProps) => {
   return (
     <button
-      className={clsx(
-        "inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 cursor-pointer",
+      className={`rounded-xl px-6 py-3 font-semibold transition ${
         variant === "primary"
-          ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20 hover:-translate-y-1 hover:bg-blue-700"
-          : "border border-blue-600 bg-white text-blue-600 hover:-translate-y-1 hover:bg-blue-600 hover:text-white",
-        className
-      )}
+          ? "bg-blue-600 text-white hover:bg-blue-700"
+          : "border border-blue-600 text-blue-600 hover:bg-blue-50"
+      } ${className}`}
       {...props}
     >
       {children}

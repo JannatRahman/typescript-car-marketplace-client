@@ -1,4 +1,4 @@
-import AddCarForm from "@/components/forms/AddCarForm";
+import CarForm from "@/components/forms/CarForm";
 import Container from "@/components/shared/Container";
 import SectionTitle from "@/components/shared/SectionTitle";
 
@@ -14,7 +14,7 @@ const AddCarPage = () => {
         />
 
         <div className="mx-auto mt-12 max-w-5xl rounded-3xl border border-gray-200 bg-white p-8 shadow-xl">
-         <AddCarForm/>
+         <CarForm/>
         </div>
       </Container>
     </main>

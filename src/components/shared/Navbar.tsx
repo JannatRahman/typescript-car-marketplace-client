@@ -28,6 +28,9 @@ const Navbar = () => {
           <Link href="/add-car" className="hover:text-[var(--primary)] transition">
             Add Cars
           </Link>
+          <Link href="/manage-cars" className="hover:text-[var(--primary)] transition">
+            Manage Cars
+          </Link>
 
           <Link href="/about" className="hover:text-[var(--primary)] transition">
             About
