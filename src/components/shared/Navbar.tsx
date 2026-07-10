@@ -21,8 +21,12 @@ const Navbar = () => {
             Home
           </Link>
 
-          <Link href="/cars" className="hover:text-[var(--primary)] transition">
-            Cars
+          <Link href="/explore-cars" className="hover:text-[var(--primary)] transition">
+            Explore Cars
+          </Link>
+
+          <Link href="/add-car" className="hover:text-[var(--primary)] transition">
+            Add Cars
           </Link>
 
           <Link href="/about" className="hover:text-[var(--primary)] transition">
