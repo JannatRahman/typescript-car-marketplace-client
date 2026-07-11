@@ -8,12 +8,20 @@ interface GetCarsParams {
   fuel?: string;
   condition?: string;
   sort?: string;
+  page?: number;
+  limit?: number;
 }
 
 interface CarsResponse {
   success: boolean;
   message: string;
   data: Car[];
+  pagination: {
+    totalCars: number;
+    currentPage: number;
+    itemsPerPage: number;
+    totalPages: number;
+  };
 }
 
 export const getCars = async ({
@@ -22,6 +30,8 @@ export const getCars = async ({
   fuel = "",
   condition = "",
   sort = "",
+  page = 1,
+  limit = 12,
 }: GetCarsParams = {}): Promise<CarsResponse> => {
 
   const query = new URLSearchParams();
@@ -35,6 +45,9 @@ export const getCars = async ({
   if (condition) query.set("condition", condition);
 
   if (sort) query.set("sort", sort);
+
+  query.set("page", page.toString());
+  query.set("limit", limit.toString());
 
   const res = await fetch(`${API_URL}/cars?${query.toString()}`, {
     cache: "no-store",

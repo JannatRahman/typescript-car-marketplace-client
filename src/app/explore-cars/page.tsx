@@ -2,10 +2,11 @@ import Container from "@/components/shared/Container";
 import SectionTitle from "@/components/shared/SectionTitle";
 import CarCard from "@/components/cards/CarCard";
 import CarFilters from "@/components/filters/CarFilters";
+import EmptyState from "@/components/shared/EmptyState";
 
 import { getCars } from "@/services/car";
 import { Car } from "@/types/car";
-import EmptyState from "@/components/shared/EmptyState";
+import Pagination from "@/components/shared/Pagination";
 
 interface CarsPageProps {
   searchParams: Promise<{
@@ -14,6 +15,7 @@ interface CarsPageProps {
     fuel?: string;
     condition?: string;
     sort?: string;
+    page?: string;
   }>;
 }
 
@@ -26,6 +28,7 @@ export default async function CarsPage({
     fuel = "",
     condition = "",
     sort = "",
+    page = "1",
   } = await searchParams;
 
   const response = await getCars({
@@ -34,9 +37,11 @@ export default async function CarsPage({
     fuel,
     condition,
     sort,
+    page: Number(page),
   });
 
   const cars: Car[] = response.data;
+  const pagination = response.pagination;
 
   return (
     <main className="bg-slate-50 py-20">
@@ -54,14 +59,22 @@ export default async function CarsPage({
             <EmptyState />
           </div>
         ) : (
-          <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {cars.map((car) => (
-              <CarCard
-                key={car._id}
-                car={car}
-              />
-            ))}
-          </div>
+          <>
+            <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {cars.map((car) => (
+                <CarCard
+                  key={car._id}
+                  car={car}
+                />
+              ))}
+            </div>
+
+            {/* Pagination will go here */}
+            <Pagination
+              currentPage={pagination.currentPage}
+              totalPages={pagination.totalPages}
+            />
+          </>
         )}
       </Container>
     </main>
