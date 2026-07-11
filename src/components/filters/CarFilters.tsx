@@ -14,6 +14,21 @@ const CarFilters = () => {
   const [search, setSearch] = useState(
     searchParams.get("search") || ""
   );
+  const [brand, setBrand] = useState(
+    searchParams.get("brand") || ""
+  );
+
+  const [fuel, setFuel] = useState(
+    searchParams.get("fuel") || ""
+  );
+
+  const [condition, setCondition] = useState(
+    searchParams.get("condition") || ""
+  );
+
+  const [sort, setSort] = useState(
+    searchParams.get("sort") || ""
+  );
 
   return (
     <div className="mt-12 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-xl">
@@ -51,36 +66,52 @@ const CarFilters = () => {
         {/* Filters */}
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
 
-          <select className="rounded-2xl border border-gray-300 px-5 py-4 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100">
-            <option>All Brands</option>
-            <option>BMW</option>
-            <option>Mercedes</option>
-            <option>Toyota</option>
-            <option>Honda</option>
-            <option>Tesla</option>
-            <option>Audi</option>
+          <select
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+            className="rounded-2xl border border-gray-300 px-5 py-4 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+          >
+            <option value="">All Brands</option>
+            <option value="BMW">BMW</option>
+            <option value="Mercedes">Mercedes</option>
+            <option value="Toyota">Toyota</option>
+            <option value="Honda">Honda</option>
+            <option value="Tesla">Tesla</option>
+            <option value="Audi">Audi</option>
           </select>
 
-          <select className="rounded-2xl border border-gray-300 px-5 py-4 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100">
-            <option>Fuel Type</option>
-            <option>Petrol</option>
-            <option>Diesel</option>
-            <option>Hybrid</option>
-            <option>Electric</option>
+          <select
+            value={fuel}
+            onChange={(e) => setFuel(e.target.value)}
+            className="rounded-2xl border border-gray-300 px-5 py-4 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+          >
+            <option value="">Fuel Type</option>
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="Electric">Electric</option>
           </select>
 
-          <select className="rounded-2xl border border-gray-300 px-5 py-4 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100">
-            <option>Condition</option>
-            <option>New</option>
-            <option>Used</option>
+          <select
+            value={condition}
+            onChange={(e) => setCondition(e.target.value)}
+            className="rounded-2xl border border-gray-300 px-5 py-4 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+          >
+            <option value="">Condition</option>
+            <option value="New">New</option>
+            <option value="Used">Used</option>
           </select>
 
-          <select className="rounded-2xl border border-gray-300 px-5 py-4 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100">
-            <option>Sort By</option>
-            <option>Newest</option>
-            <option>Oldest</option>
-            <option>Price Low → High</option>
-            <option>Price High → Low</option>
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+            className="rounded-2xl border border-gray-300 px-5 py-4 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+          >
+            <option value="">Sort By</option>
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="priceLow">Price Low → High</option>
+            <option value="priceHigh">Price High → Low</option>
           </select>
 
         </div>
@@ -89,9 +120,15 @@ const CarFilters = () => {
         <div className="flex flex-col gap-4 sm:flex-row sm:justify-end">
 
           <Button
+          className="cursor-pointer"
             variant="secondary"
             onClick={() => {
               setSearch("");
+              setBrand("");
+              setFuel("");
+              setCondition("");
+              setSort("");
+
               router.push("/explore-cars");
             }}
           >
@@ -100,14 +137,19 @@ const CarFilters = () => {
           </Button>
 
           <Button
+          className="cursor-pointer"
             onClick={() => {
-              const params = new URLSearchParams(searchParams.toString());
+              const params = new URLSearchParams();
 
-              if (search) {
-                params.set("search", search);
-              } else {
-                params.delete("search");
-              }
+              if (search) params.set("search", search);
+
+              if (brand) params.set("brand", brand);
+
+              if (fuel) params.set("fuel", fuel);
+
+              if (condition) params.set("condition", condition);
+
+              if (sort) params.set("sort", sort);
 
               router.push(`/explore-cars?${params.toString()}`);
             }}

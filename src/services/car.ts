@@ -4,6 +4,10 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface GetCarsParams {
   search?: string;
+  brand?: string;
+  fuel?: string;
+  condition?: string;
+  sort?: string;
 }
 
 interface CarsResponse {
@@ -12,14 +16,25 @@ interface CarsResponse {
   data: Car[];
 }
 
-export const getCars = async (
-  { search = "" }: GetCarsParams = {}
-): Promise<CarsResponse> => {
+export const getCars = async ({
+  search = "",
+  brand = "",
+  fuel = "",
+  condition = "",
+  sort = "",
+}: GetCarsParams = {}): Promise<CarsResponse> => {
+
   const query = new URLSearchParams();
 
-  if (search) {
-    query.append("search", search);
-  }
+  if (search) query.set("search", search);
+
+  if (brand) query.set("brand", brand);
+
+  if (fuel) query.set("fuel", fuel);
+
+  if (condition) query.set("condition", condition);
+
+  if (sort) query.set("sort", sort);
 
   const res = await fetch(`${API_URL}/cars?${query.toString()}`, {
     cache: "no-store",
