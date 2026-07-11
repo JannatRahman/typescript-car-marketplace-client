@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Container from "@/components/shared/Container";
 import { getSingleCar } from "@/services/car";
+import Link from "next/link";
+import Button from "@/components/shared/Button";
+import { ArrowBigLeft } from "lucide-react";
 
 interface PageProps {
   params: Promise<{
@@ -17,7 +20,13 @@ const CarDetailsPage = async ({ params }: PageProps) => {
   return (
     <main className="bg-slate-50 py-20">
       <Container>
+         <div className=" pb-10">
+          <Link href="/explore-cars">
+         <Button className="cursor-pointer flex gap-2 items-center"><ArrowBigLeft/> Back</Button></Link>
+         </div>
+       
         <div className="grid gap-14 lg:grid-cols-2">
+          
 
           {/* Image */}
           <div className="overflow-hidden rounded-3xl bg-white shadow-lg">
@@ -26,7 +35,7 @@ const CarDetailsPage = async ({ params }: PageProps) => {
               alt={car.title}
               width={900}
               height={600}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover transition duration-700 hover:scale-110"
             />
           </div>
 
