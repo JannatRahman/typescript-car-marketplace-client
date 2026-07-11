@@ -1,24 +1,25 @@
 "use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+
+import Button from "@/components/shared/Button";
+import { addCar, updateCar } from "@/services/car";
 import { Car } from "@/types/car";
+
 
 interface CarFormProps {
   mode: "create" | "edit";
   car?: Car;
 }
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-
-import Button from "@/components/shared/Button";
-import { addCar } from "@/services/car";
-import { CarFormData } from "@/types/carForm";
-import { useRouter } from "next/navigation";
-
 const CarForm = ({
   mode,
   car,
 }: CarFormProps) => {
+
 
 
   const {
@@ -29,26 +30,47 @@ const CarForm = ({
   } = useForm<Car>({
     defaultValues: car,
   });
+  useEffect(() => {
+    if (mode === "edit" && car) {
+      reset(car);
+    }
+  }, [car, mode, reset]);
 
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const onSubmit = async (data: CarFormData) => {
+  const onSubmit = async (data: Car) => {
+    setLoading(true);
+
     try {
-      setLoading(true);
+      if (mode === "create") {
+        const result = await addCar(data);
 
-      const result = await addCar(data);
+        if (result.success) {
+          toast.success("Car added successfully!");
 
-      if (result.success) {
-        toast.success("Car added successfully!");
-        reset();
-        router.push("/explore-cars");
+          reset();
+
+          router.push("/explore-cars");
+          router.refresh();
+        }
       } else {
-        toast.error(result.message || "Something went wrong.");
+        if (!car?._id) return;
+
+        const { _id, ...updatedCar } = data;
+
+        const result = await updateCar(car._id, updatedCar);
+
+        if (result.success) {
+          toast.success("Car updated successfully!");
+
+          router.push("/manage-cars");
+          router.refresh();
+        }
       }
     } catch (error) {
       console.error(error);
-      toast.error("Failed to add car.");
+      toast.error("Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -144,6 +166,14 @@ const CarForm = ({
             {...register("year", {
               required: "Year is required",
               valueAsNumber: true,
+              min: {
+                value: 1990,
+                message: "Invalid year",
+              },
+              max: {
+                value: new Date().getFullYear() + 1,
+                message: "Invalid year",
+              },
             })}
             className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
           />
@@ -167,6 +197,10 @@ const CarForm = ({
             {...register("price", {
               required: "Price is required",
               valueAsNumber: true,
+              min: {
+                value: 1,
+                message: "Price must be greater than 0",
+              },
             })}
             className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
           />
@@ -190,6 +224,10 @@ const CarForm = ({
             {...register("mileage", {
               required: "Mileage is required",
               valueAsNumber: true,
+              min: {
+                value: 0,
+                message: "Mileage can't be negative",
+              },
             })}
             className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
           />
@@ -368,9 +406,15 @@ const CarForm = ({
       <Button
         type="submit"
         disabled={loading}
-        className="cursor-pointer w-full"
+        className="w-full cursor-pointer"
       >
-        {loading ? "Publishing..." : "Publish Car"}
+        {loading
+          ? mode === "create"
+            ? "Publishing..."
+            : "Updating..."
+          : mode === "create"
+            ? "Publish Car"
+            : "Update Car"}
       </Button>
 
     </form>
