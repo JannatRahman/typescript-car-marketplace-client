@@ -3,6 +3,7 @@ import SectionTitle from "@/components/shared/SectionTitle";
 import CarCard from "@/components/cards/CarCard";
 import { getCars } from "@/services/car";
 import { Car } from "@/types/car";
+import CarFilters from "@/components/filters/CarFilters";
 
 export default async function CarsPage() {
   const response = await getCars();
@@ -17,6 +18,7 @@ export default async function CarsPage() {
           title="Explore All Cars"
           subtitle="Browse premium cars from trusted dealers."
         />
+        <CarFilters/>
 
         <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {cars.map((car) => (

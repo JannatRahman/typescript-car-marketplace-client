@@ -59,6 +59,10 @@ const CarForm = ({
 
         const { _id, ...updatedCar } = data;
 
+        console.log("DATA:", data);
+        console.log("UPDATED:", updatedCar);
+        console.log("JSON:", JSON.stringify(updatedCar));
+
         const result = await updateCar(car._id, updatedCar);
 
         if (result.success) {
@@ -159,13 +163,13 @@ const CarForm = ({
           <label className="mb-2 block text-sm font-semibold">
             Year
           </label>
-
           <input
-            type="number"
-            placeholder="2024"
+            type="text"
+            inputMode="numeric"
+
             {...register("year", {
               required: "Year is required",
-              valueAsNumber: true,
+              setValueAs: (value) => Number(value),
               min: {
                 value: 1990,
                 message: "Invalid year",
@@ -192,11 +196,12 @@ const CarForm = ({
           </label>
 
           <input
-            type="number"
-            placeholder="8500000"
+            type="text"
+            inputMode="numeric"
+
             {...register("price", {
               required: "Price is required",
-              valueAsNumber: true,
+              setValueAs: (value) => Number(value),
               min: {
                 value: 1,
                 message: "Price must be greater than 0",
@@ -219,11 +224,12 @@ const CarForm = ({
           </label>
 
           <input
-            type="number"
-            placeholder="5000"
+            type="text"
+            inputMode="numeric"
+
             {...register("mileage", {
               required: "Mileage is required",
-              valueAsNumber: true,
+              setValueAs: (value) => Number(value),
               min: {
                 value: 0,
                 message: "Mileage can't be negative",
