@@ -2,8 +2,26 @@ import { Car } from "@/types/car";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const getCars = async () => {
-  const res = await fetch(`${API_URL}/cars`, {
+interface GetCarsParams {
+  search?: string;
+}
+
+interface CarsResponse {
+  success: boolean;
+  message: string;
+  data: Car[];
+}
+
+export const getCars = async (
+  { search = "" }: GetCarsParams = {}
+): Promise<CarsResponse> => {
+  const query = new URLSearchParams();
+
+  if (search) {
+    query.append("search", search);
+  }
+
+  const res = await fetch(`${API_URL}/cars?${query.toString()}`, {
     cache: "no-store",
   });
 
@@ -13,6 +31,7 @@ export const getCars = async () => {
 
   return res.json();
 };
+
 
 export const getSingleCar = async (id: string) => {
   const res = await fetch(`${API_URL}/cars/${id}`, {

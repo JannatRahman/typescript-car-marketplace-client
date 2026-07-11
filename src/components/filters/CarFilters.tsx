@@ -1,9 +1,20 @@
 "use client";
 
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { Search, RotateCcw } from "lucide-react";
 import Button from "../shared/Button";
 
+
 const CarFilters = () => {
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+
+  const [search, setSearch] = useState(
+    searchParams.get("search") || ""
+  );
+
   return (
     <div className="mt-12 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-xl">
 
@@ -31,6 +42,8 @@ const CarFilters = () => {
           <input
             type="text"
             placeholder="Search by title, brand or model..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             className="w-full rounded-2xl border border-gray-300 py-4 pl-12 pr-5 text-lg outline-none transition-all focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
           />
         </div>
@@ -77,14 +90,28 @@ const CarFilters = () => {
 
           <Button
             variant="secondary"
-            className="flex items-center justify-center gap-2"
+            onClick={() => {
+              setSearch("");
+              router.push("/explore-cars");
+            }}
           >
             <RotateCcw size={18} />
             Reset
           </Button>
 
-          <Button className="flex items-center justify-center gap-2">
-            <Search size={18} />
+          <Button
+            onClick={() => {
+              const params = new URLSearchParams(searchParams.toString());
+
+              if (search) {
+                params.set("search", search);
+              } else {
+                params.delete("search");
+              }
+
+              router.push(`/explore-cars?${params.toString()}`);
+            }}
+          >
             Search Cars
           </Button>
 
