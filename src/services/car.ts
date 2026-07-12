@@ -79,6 +79,7 @@ export const addCar = async (car: Omit<Car, "_id">) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(car),
   });
 
@@ -98,6 +99,7 @@ export const updateCar = async (
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify(car),
   });
 
@@ -111,6 +113,7 @@ export const updateCar = async (
 export const deleteCar = async (id: string) => {
   const res = await fetch(`${API_URL}/cars/${id}`, {
     method: "DELETE",
+    credentials: "include",
   });
 
   if (!res.ok) {
