@@ -1,17 +1,63 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #2563EB;
+  /* Brand */
+  --primary: #2563eb;
   --secondary: #111827;
-  --accent: #F59E0B;
-  --background: #F8FAFC;
+  --accent: #f59e0b;
+
+  /* Theme */
+  --background: #f8fafc;
   --foreground: #111827;
+
+  --card: #ffffff;
+  --card-foreground: #111827;
+
+  --border: #e5e7eb;
+
+  --muted: #64748b;
+
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  /* Brand colors stay mostly the same */
+  --primary: #3b82f6;
+  --secondary: #f8fafc;
+  --accent: #fbbf24;
+
+  /* Theme */
+  --background: #020617;
+  --foreground: #f8fafc;
+
+  --card: #0f172a;
+  --card-foreground: #f8fafc;
+
+  --border: #334155;
+
+  --muted: #94a3b8;
+
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-manrope), sans-serif;
   background: var(--background);
   color: var(--foreground);
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+* {
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
 }
 
 @keyframes loading {

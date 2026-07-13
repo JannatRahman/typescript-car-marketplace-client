@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
 
-import Navbar from "@/components/shared/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/shared/Footer";
 
 import { AuthProvider } from "@/providers/AuthProvider";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ThemeProvider from "@/providers/ThemeProvider";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -26,21 +27,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={manrope.variable}>
-        <AuthProvider>
-          <Navbar />
+        <ThemeProvider>
+          <AuthProvider>
 
-          {children}
+            <Navbar />
 
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            theme="colored"
-          />
+            {children}
 
-          <Footer />
-        </AuthProvider>
+            <ToastContainer />
+
+            <Footer />
+
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
