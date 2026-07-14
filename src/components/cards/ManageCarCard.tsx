@@ -41,7 +41,7 @@ const ManageCarCard = ({ car }: ManageCarCardProps) => {
   };
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition hover:shadow-xl">
+    <div className="overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card)]shadow-sm transition hover:shadow-xl">
 
       {/* Image */}
       <div className="relative h-60">
@@ -73,11 +73,11 @@ const ManageCarCard = ({ car }: ManageCarCardProps) => {
 
         </div>
 
-        <p className="text-gray-500">
+        <p className="text-[var(--muted)]">
           {car.brand} • {car.model}
         </p>
 
-        <div className="grid grid-cols-2 gap-3 text-sm text-gray-600">
+        <div className="grid grid-cols-2 gap-3 text-sm text-[var(--muted)]">
 
           <p>📅 {car.year}</p>
 
@@ -89,7 +89,7 @@ const ManageCarCard = ({ car }: ManageCarCardProps) => {
 
         </div>
 
-        <h3 className="text-3xl font-bold text-blue-600">
+        <h3 className="text-3xl font-bold text-[var(--primary)]">
           ৳ {car.price.toLocaleString()}
         </h3>
 

@@ -145,7 +145,7 @@ const ProfileDropdown = ({
               </Link>
 
               <Link
-                href="/add-car"
+                href="/dashboard/add-car"
                 className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 <PlusCircle size={18} />

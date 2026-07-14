@@ -98,7 +98,7 @@ const CarForm = ({
             {...register("title", {
               required: "Car title is required",
             })}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-blue-600"
           />
 
           {errors.title && (
@@ -118,7 +118,7 @@ const CarForm = ({
             {...register("brand", {
               required: "Brand is required",
             })}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none focus:border-blue-600"
           >
             <option value="">Select Brand</option>
             <option value="BMW">BMW</option>
@@ -148,7 +148,7 @@ const CarForm = ({
             {...register("model", {
               required: "Model is required",
             })}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-blue-600"
           />
 
           {errors.model && (
@@ -165,6 +165,7 @@ const CarForm = ({
           </label>
           <input
             type="text"
+            placeholder="Year"
             inputMode="numeric"
 
             {...register("year", {
@@ -179,7 +180,7 @@ const CarForm = ({
                 message: "Invalid year",
               },
             })}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+           className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-blue-600"
           />
 
           {errors.year && (
@@ -197,6 +198,7 @@ const CarForm = ({
 
           <input
             type="text"
+            placeholder="Price"
             inputMode="numeric"
 
             {...register("price", {
@@ -207,7 +209,7 @@ const CarForm = ({
                 message: "Price must be greater than 0",
               },
             })}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+           className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-blue-600"
           />
 
           {errors.price && (
@@ -225,6 +227,7 @@ const CarForm = ({
 
           <input
             type="text"
+            placeholder="Mileage"
             inputMode="numeric"
 
             {...register("mileage", {
@@ -235,7 +238,7 @@ const CarForm = ({
                 message: "Mileage can't be negative",
               },
             })}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-blue-600"
           />
 
           {errors.mileage && (
@@ -255,7 +258,7 @@ const CarForm = ({
             {...register("fuel", {
               required: "Fuel type is required",
             })}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none focus:border-blue-600"
           >
             <option value="">Select Fuel Type</option>
             <option value="Petrol">Petrol</option>
@@ -281,7 +284,7 @@ const CarForm = ({
             {...register("transmission", {
               required: "Transmission is required",
             })}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+           className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none focus:border-blue-600"
           >
             <option value="">Select Transmission</option>
             <option value="Automatic">Automatic</option>
@@ -307,7 +310,7 @@ const CarForm = ({
             {...register("location", {
               required: "Location is required",
             })}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-blue-600"
           />
 
           {errors.location && (
@@ -327,7 +330,7 @@ const CarForm = ({
             {...register("condition", {
               required: "Condition is required",
             })}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+           className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none focus:border-blue-600"
           >
             <option value="">Select Condition</option>
             <option value="New">New</option>
@@ -353,7 +356,7 @@ const CarForm = ({
             {...register("sellerName", {
               required: "Seller name is required",
             })}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-blue-600"
           />
 
           {errors.sellerName && (
@@ -375,7 +378,7 @@ const CarForm = ({
             {...register("image", {
               required: "Image path is required",
             })}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-blue-600"
           />
 
           {errors.image && (
@@ -399,7 +402,7 @@ const CarForm = ({
           {...register("description", {
             required: "Description is required",
           })}
-          className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+          className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 outline-none focus:border-blue-600"
         />
 
         {errors.description && (

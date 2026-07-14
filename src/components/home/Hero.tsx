@@ -42,7 +42,7 @@ const Hero = () => {
             <div className="mt-10 flex flex-wrap gap-4">
               <Button>Browse Cars</Button>
 
-              <Link href="/add-car">
+              <Link href="/dashboard/add-car">
                 <Button>Sell Your Car</Button>
               </Link>
             </div>

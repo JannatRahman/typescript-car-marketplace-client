@@ -61,15 +61,13 @@ export default function LoginPage() {
     router.push("/");
   };
 
-  const demoLogin = () => {
-    setValue("email", "jannat@gmail.com");
-    setValue("password", "123456");
-  };
+ 
 
   return (
     <AuthLayout
       title="Welcome Back"
       subtitle="Login to your DriveMart account."
+      
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -138,14 +136,7 @@ export default function LoginPage() {
           {loading ? "Signing In..." : "Login"}
         </Button>
 
-        <Button
-          type="button"
-          variant="secondary"
-          className="w-full"
-          onClick={demoLogin}
-        >
-          Demo Login
-        </Button>
+        
 
         <p className="text-center text-gray-600">
           Don't have an account?{" "}

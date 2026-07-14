@@ -1,4 +1,6 @@
+
 import { Car } from "@/types/car";
+
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -60,6 +62,18 @@ export const getCars = async ({
   return res.json();
 };
 
+export const getMyCars = async () => {
+  const res = await fetch(`${API_URL}/my-cars`, {
+    credentials: "include",
+    cache: "no-store",
+  });
+
+  const data = await res.json();
+
+  console.log("SERVICE RESPONSE:", data);
+
+  return data;
+};
 
 export const getSingleCar = async (id: string) => {
   const res = await fetch(`${API_URL}/cars/${id}`, {
@@ -74,20 +88,29 @@ export const getSingleCar = async (id: string) => {
 };
 
 export const addCar = async (car: Omit<Car, "_id">) => {
+  console.log("API_URL:", API_URL);
+  console.log("Sending to:", `${API_URL}/cars`);
+
   const res = await fetch(`${API_URL}/cars`, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
     body: JSON.stringify(car),
   });
 
+  console.log("Status:", res.status);
+
+  const data = await res.json();
+
+  console.log("Response:", data);
+
   if (!res.ok) {
-    throw new Error("Failed to add car");
+    throw new Error(data.message || "Failed to add car");
   }
 
-  return res.json();
+  return data;
 };
 
 export const updateCar = async (

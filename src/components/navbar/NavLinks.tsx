@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   CarFront,
   CirclePlus,
@@ -24,69 +25,115 @@ const NavLinks = ({
   mobile = false,
   onClick,
 }: NavLinksProps) => {
-  const className = mobile
-    ? "flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-slate-100"
-    : "flex items-center gap-2 transition hover:text-[var(--primary)]";
+  const pathname = usePathname();
+
+  const links = [
+    {
+      name: "Home",
+      href: "/",
+      icon: House,
+      show: true,
+    },
+    {
+      name: "Explore Cars",
+      href: "/explore-cars",
+      icon: CarFront,
+      show: true,
+    },
+    {
+      name: "Add Car",
+      href: "/dashboard/add-car",
+      icon: CirclePlus,
+      show: !!user,
+    },
+    {
+      name: "My Cars",
+      href: "/my-cars",
+      icon: ClipboardList,
+      show: !!user,
+    },
+    {
+      name: "About",
+      href: "/about",
+      icon: Info,
+      show: true,
+    },
+    {
+      name: "Contact",
+      href: "/contact",
+      icon: Mail,
+      show: true,
+    },
+  ];
 
   return (
     <>
-      <Link
-        href="/"
-        className={className}
-        onClick={onClick}
-      >
-        <House size={18} />
-        Home
-      </Link>
+      {links
+        .filter((link) => link.show)
+        .map((link) => {
+          const Icon = link.icon;
 
-      <Link
-        href="/explore-cars"
-        className={className}
-        onClick={onClick}
-      >
-        <CarFront size={18} />
-        Explore Cars
-      </Link>
+          const active =
+            pathname === link.href ||
+            (link.href !== "/" &&
+              pathname.startsWith(link.href));
 
-      {user && (
-        <>
-          <Link
-            href="/add-car"
-            className={className}
-            onClick={onClick}
-          >
-            <CirclePlus size={18} />
-            Add Car
-          </Link>
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={onClick}
+              className={
+                mobile
+                  ? `
+                    flex
+                    items-center
+                    gap-3
+                    rounded-2xl
+                    px-4
+                    py-3
 
-          <Link
-            href="/my-cars"
-            className={className}
-            onClick={onClick}
-          >
-            <ClipboardList size={18} />
-            My Cars
-          </Link>
-        </>
-      )}
+                    font-medium
 
-      <Link
-        href="/about"
-        className={className}
-        onClick={onClick}
-      >
-        <Info size={18} />
-        About
-      </Link>
+                    transition-all
+                    duration-200
 
-      <Link
-        href="/contact"
-        className={className}
-        onClick={onClick}
-      >
-        <Mail size={18} />
-        Contact
-      </Link>
+                    ${
+                      active
+                        ? "bg-[var(--primary)] text-white"
+                        : "text-[var(--foreground)] hover:bg-[var(--surface-secondary)]"
+                    }
+                  `
+                  : `
+                    flex
+                    items-center
+                    gap-2
+
+                    rounded-xl
+
+                    px-4
+                    py-2
+
+                    text-sm
+                    font-semibold
+
+                    transition-all
+                    duration-200
+
+                    ${
+                      active
+                        ? "bg-[var(--primary)] text-white shadow-md"
+                        : "text-[var(--foreground)] hover:bg-[var(--surface-secondary)] hover:text-[var(--primary)]"
+                    }
+                  `
+              }
+            >
+              <Icon size={18} />
+
+              <span>{link.name}</span>
+            </Link>
+          );
+        })}
     </>
   );
 };

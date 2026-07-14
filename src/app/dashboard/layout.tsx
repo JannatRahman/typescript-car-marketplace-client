@@ -1,48 +1,42 @@
-import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
-import "./globals.css";
+"use client";
 
-import Navbar from "@/components/navbar/Navbar";
-import Footer from "@/components/shared/Footer";
+import { useState } from "react";
 
-import { AuthProvider } from "@/providers/AuthProvider";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import DashboardTopbar from "./DashboardTopbar";
+import DashboardSidebar from "./DashboardSidebar";
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import ThemeProvider from "@/providers/ThemeProvider";
 
-const manrope = Manrope({
-  subsets: ["latin"],
-  variable: "--font-manrope",
-});
-
-export const metadata: Metadata = {
-  title: "DriveMart",
-  description: "Discover, Compare & Drive Your Dream Car",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface Props {
   children: React.ReactNode;
-}>) {
+}
+
+export default function DashboardLayout({
+  children,
+}: Props) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={manrope.variable}>
-        <ThemeProvider>
-          <AuthProvider>
+    <ProtectedRoute>
+      <div className="flex min-h-screen bg-[var(--background)]">
 
-            <Navbar />
+        <DashboardSidebar
+          
+        />
 
+        <div className="flex flex-1 flex-col">
+
+          <DashboardTopbar
+            
+          />
+
+          <main className="flex-1 p-6 lg:p-8">
             {children}
+          </main>
 
-            <ToastContainer />
+        </div>
 
-            <Footer />
-
-          </AuthProvider>
-        </ThemeProvider>
-      </body>
-    </html>
+      </div>
+    </ProtectedRoute>
   );
 }

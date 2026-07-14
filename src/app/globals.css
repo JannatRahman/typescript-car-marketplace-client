@@ -3,41 +3,57 @@
 :root {
   /* Brand */
   --primary: #2563eb;
-  --secondary: #111827;
+  --primary-hover: #1d4ed8;
+
+  --secondary: #0f172a;
   --accent: #f59e0b;
 
-  /* Theme */
+  /* Backgrounds */
   --background: #f8fafc;
-  --foreground: #111827;
+  --surface: #ffffff;
+  --surface-secondary: #f1f5f9;
 
-  --card: #ffffff;
-  --card-foreground: #111827;
+  /* Text */
+  --foreground: #0f172a;
+  --foreground-muted: #64748b;
 
-  --border: #e5e7eb;
+  /* Borders */
+  --border: #e2e8f0;
 
-  --muted: #64748b;
+  /* States */
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #f59e0b;
 
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  /* Shadow */
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
 }
 
 .dark {
-  /* Brand colors stay mostly the same */
   --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+
   --secondary: #f8fafc;
   --accent: #fbbf24;
 
-  /* Theme */
   --background: #020617;
-  --foreground: #f8fafc;
+  --surface: #0f172a;
+  --surface-secondary: #1e293b;
 
-  --card: #0f172a;
-  --card-foreground: #f8fafc;
+  --foreground: #f8fafc;
+  --foreground-muted: #94a3b8;
 
   --border: #334155;
 
-  --muted: #94a3b8;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --warning: #facc15;
 
-  --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
 }
 
 html {
@@ -46,18 +62,34 @@ html {
 
 body {
   font-family: var(--font-manrope), sans-serif;
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  transition:
-    background-color 0.25s ease,
-    color 0.25s ease;
+  min-height: 100vh;
 }
 
-* {
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+input,
+textarea,
+select {
+  color: var(--foreground);
+  background-color: var(--surface);
+  border-color: var(--border);
+}
+
+::placeholder {
+  color: var(--foreground-muted);
 }
 
 @keyframes loading {

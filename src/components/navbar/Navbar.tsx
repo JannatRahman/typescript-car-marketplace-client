@@ -22,33 +22,59 @@ const Navbar = () => {
   return (
     <header
       className="
-      sticky
-      top-0
-      z-50
-      border-b
-      border-[var(--border)]
-      bg-[var(--background)]/80
-      backdrop-blur-xl
-      "
+sticky
+top-0
+z-50
+
+border-b
+border-[var(--border)]
+
+bg-[color:color-mix(in_srgb,var(--background)_85%,transparent)]
+
+backdrop-blur-xl
+"
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
 
- 
+
 
         <Link
           href="/"
-          className="text-3xl font-extrabold"
+          className="flex items-center gap-2"
         >
-          <span className="text-[var(--secondary)]">
-            Drive
-          </span>
+          <div
+            className="
+      flex
+      h-11
+      w-11
+      items-center
+      justify-center
+      rounded-2xl
+      bg-[var(--primary)]
+      text-xl
+      font-bold
+      text-white
+      shadow-md
+    "
+          >
+            D
+          </div>
 
-          <span className="text-[var(--primary)]">
-            Mart
-          </span>
+          <div className="leading-tight">
+            <h1 className="text-2xl font-extrabold tracking-tight">
+              Drive
+              <span className="text-[var(--primary)]">
+                Mart
+              </span>
+            </h1>
+
+            <p className="text-xs text-[var(--foreground-muted)]">
+              Premium Car Marketplace
+            </p>
+          </div>
         </Link>
 
-    
+
 
         <nav className="hidden items-center gap-8 md:flex">
 
