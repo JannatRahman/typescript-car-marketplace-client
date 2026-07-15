@@ -15,22 +15,23 @@ const EditCarPage = async ({ params }: EditPageProps) => {
   const { id } = await params;
 
   const response = await getSingleCar(id);
-
   const car: Car = response.data;
 
   return (
-    <main className="bg-slate-50 py-20">
+    <main className="bg-[var(--background)] py-20">
       <Container>
         <SectionTitle
-          badge="Update"
-          title="Edit Car"
-          subtitle="Update your car information."
+          badge="Update Listing"
+          title="Edit Your Car"
+          subtitle="Update your vehicle information and save your changes."
         />
 
-        <CarForm
-          mode="edit"
-          car={car}
-        />
+        <div className="mx-auto mt-12 max-w-7xl rounded-3xl border border-[var(--border)] bg-[var(--card)] p-8 shadow-xl lg:p-10">
+          <CarForm
+            mode="edit"
+            car={car}
+          />
+        </div>
       </Container>
     </main>
   );

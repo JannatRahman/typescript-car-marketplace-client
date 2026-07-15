@@ -38,102 +38,135 @@ const links = [
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
-
   const router = useRouter();
 
   const { user, logout } = useAuth();
 
   const handleLogout = async () => {
     await logout();
-
     router.push("/");
   };
 
   return (
-    <aside className="flex h-screen w-72 flex-col border-r bg-white dark:border-gray-800 dark:bg-gray-950">
-
+    <aside
+      className="
+        flex
+        h-screen
+        w-84
+        flex-col
+        border-r
+        border-[var(--border)]
+        bg-[var(--card)]
+      "
+    >
       {/* Logo */}
 
-      <div className="border-b p-6">
-
-        <h1 className="text-3xl font-bold">
+      <div className="border-b border-[var(--border)] p-6">
+        <h1 className="text-3xl font-black text-[var(--foreground)]">
           Drive
           <span className="text-[var(--primary)]">
             Mart
           </span>
         </h1>
 
-        <p className="mt-1 text-sm text-gray-500">
-          Car Marketplace
+        <p className="mt-1 text-sm text-[var(--foreground-muted)]">
+          Premium Car Marketplace
         </p>
-
       </div>
 
       {/* Navigation */}
 
       <nav className="flex flex-1 flex-col gap-2 p-4">
-
         {links.map((link) => {
           const Icon = link.icon;
-
           const active = pathname === link.href;
 
           return (
             <Link
               key={link.href}
               href={link.href}
-              className={`flex items-center gap-3 rounded-xl px-4 py-3 transition
-              ${
-                active
-                  ? "bg-[var(--primary)] text-white"
-                  : "hover:bg-gray-100 dark:hover:bg-gray-800"
-              }`}
+              className={`
+                flex
+                items-center
+                gap-3
+                rounded-2xl
+                px-4
+                py-3
+                font-medium
+                transition-all
+                duration-200
+                ${
+                  active
+                    ? "bg-[var(--primary)] text-white shadow-lg"
+                    : "text-[var(--foreground)] hover:bg-[var(--surface-secondary)]"
+                }
+              `}
             >
               <Icon size={20} />
-
               {link.title}
             </Link>
           );
         })}
-
       </nav>
 
-      {/* Bottom Section */}
+      {/* User */}
 
-      <div className="border-t p-4">
-
-        <div className="mb-4 flex items-center gap-3">
-
-          <UserCircle2
-            size={42}
-            className="text-[var(--primary)]"
-          />
-
-          <div>
-
-            <h3 className="font-semibold">
-              {user?.name}
-            </h3>
-
-            <p className="text-sm text-gray-500">
-              Seller Account
-            </p>
-
+      <div className="border-t border-[var(--border)] p-5">
+        <div className="mb-5 flex items-center gap-3">
+          <div
+            className="
+              flex
+              h-12
+              w-12
+              items-center
+              justify-center
+              rounded-full
+              bg-[var(--surface-secondary)]
+            "
+          >
+            <UserCircle2
+              size={34}
+              className="text-[var(--primary)]"
+            />
           </div>
 
+          <div className="min-w-0">
+            <h3 className="truncate font-semibold text-[var(--foreground)]">
+              {user?.name ?? "Guest"}
+            </h3>
+
+            <p className="truncate text-sm text-[var(--foreground-muted)]">
+              Seller Account
+            </p>
+          </div>
         </div>
 
         <button
           onClick={handleLogout}
-          className="flex w-full items-center gap-3 rounded-xl bg-red-50 px-4 py-3 text-red-600 transition hover:bg-red-100 dark:bg-red-950 dark:hover:bg-red-900"
+          className="
+            flex
+            w-full
+            cursor-pointer
+            items-center
+            justify-center
+            gap-2
+            rounded-2xl
+            border
+            border-red-500
+            px-4
+            py-3
+            font-semibold
+            text-red-500
+            transition-all
+            duration-200
+            hover:bg-red-500
+            hover:text-white
+          "
         >
-          <LogOut size={20} />
-
+          <LogOut size={18} />
           Logout
         </button>
-
       </div>
-
     </aside>
   );
 }

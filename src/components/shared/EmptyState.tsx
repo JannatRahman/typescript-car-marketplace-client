@@ -1,34 +1,96 @@
 import Link from "next/link";
-import Button from "./Button";
 import { SearchX } from "lucide-react";
+
+import Button from "./Button";
 
 const EmptyState = () => {
   return (
-    <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-gray-300 bg-white py-24 text-center shadow-sm">
+    <div
+      className="
+        flex
+        flex-col
+        items-center
+        justify-center
 
-      <div className="rounded-full bg-blue-100 p-6">
-        <SearchX
-          size={50}
-          className="text-blue-600"
-        />
+        rounded-3xl
+
+        border
+        border-[var(--border)]
+
+        bg-[var(--card)]
+
+        px-8
+        py-24
+
+        text-center
+
+        shadow-lg
+      "
+    >
+      {/* Icon */}
+
+      <div
+        className="
+          flex
+          h-24
+          w-24
+          items-center
+          justify-center
+
+          rounded-full
+
+          bg-[var(--surface-secondary)]
+
+          text-[var(--primary)]
+        "
+      >
+        <SearchX size={44} />
       </div>
 
-      <h2 className="mt-8 text-3xl font-bold text-gray-900">
+      {/* Heading */}
+
+      <h2
+        className="
+          mt-8
+
+          text-3xl
+          font-bold
+
+          text-[var(--foreground)]
+        "
+      >
         No Cars Found
       </h2>
 
-      <p className="mt-3 max-w-md text-gray-500">
-        We could not find any cars matching your search.
-        Try changing your filters or clearing them to see
-        all available cars.
+      {/* Description */}
+
+      <p
+        className="
+          mt-4
+
+          max-w-lg
+
+          text-base
+          leading-7
+
+          text-[var(--muted)]
+        "
+      >
+        We couldn't find any cars matching your search criteria.
+        Try adjusting the filters or clear them to explore all
+        available vehicles.
       </p>
 
-      <Link href="/explore-cars" className="cursor-pointer mt-8">
-        <Button>
+      {/* Action */}
+
+      <Link
+        href="/explore-cars"
+        className="mt-10"
+      >
+        <Button className="cursor-pointer px-8">
           Clear Filters
         </Button>
       </Link>
-
     </div>
   );
 };
