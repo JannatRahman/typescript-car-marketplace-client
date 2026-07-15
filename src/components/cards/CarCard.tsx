@@ -1,6 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
+import {
+  Calendar,
+  Fuel,
+  Gauge,
+  MapPin,
+  Settings2,
+  ArrowRight,
+} from "lucide-react";
+
 import { Car } from "@/types/car";
+
 import Button from "../shared/Button";
 
 interface CarCardProps {
@@ -9,110 +19,251 @@ interface CarCardProps {
 
 const CarCard = ({ car }: CarCardProps) => {
   return (
-    <div className="group overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+    <article
+      className="
+        group
 
+        overflow-hidden
+
+        rounded-[28px]
+
+        border
+        border-[var(--border)]
+
+        bg-[var(--surface)]
+
+        shadow-sm
+
+        transition-all
+        duration-300
+
+        hover:-translate-y-2
+        hover:shadow-2xl
+      "
+    >
       {/* Image */}
-      <div className="relative overflow-hidden">
 
+      <div className="relative overflow-hidden">
         <Image
           src={car.image}
           alt={car.title}
-          width={600}
-          height={400}
-          className="h-60 w-full object-cover transition duration-700 group-hover:scale-110"
+          width={700}
+          height={450}
+          className="
+            h-64
+            w-full
+            object-cover
+
+            transition-transform
+            duration-500
+
+            group-hover:scale-110
+          "
         />
 
-        {/* Condition Badge */}
+        {/* Gradient */}
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+
+        {/* Condition */}
+
         <span
-          className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold text-white ${
-            car.condition === "New"
-              ? "bg-green-600"
-              : "bg-amber-500"
-          }`}
+          className={`
+            absolute
+            left-5
+            top-5
+
+            rounded-full
+
+            px-4
+            py-1.5
+
+            text-xs
+            font-bold
+
+            text-white
+
+            ${
+              car.condition === "New"
+                ? "bg-emerald-500"
+                : "bg-amber-500"
+            }
+          `}
         >
           {car.condition}
         </span>
 
+        {/* Price */}
+
+        <div
+          className="
+            absolute
+            bottom-5
+            right-5
+
+            rounded-2xl
+
+            bg-white/95
+
+            px-4
+            py-2
+
+            shadow-lg
+
+            backdrop-blur
+          "
+        >
+          <p className="text-xs text-slate-500">
+            Starting From
+          </p>
+
+          <h2 className="text-xl font-black text-blue-600">
+            ৳ {car.price.toLocaleString()}
+          </h2>
+        </div>
       </div>
 
       {/* Content */}
-      <div className="space-y-5 p-6">
 
-        {/* Brand + Model */}
+      <div className="space-y-6 p-6">
+        {/* Brand */}
+
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">
+          <span
+            className="
+              rounded-full
+
+              bg-blue-50
+
+              px-3
+              py-1
+
+              text-xs
+              font-bold
+
+              uppercase
+
+              tracking-wider
+
+              text-blue-600
+            "
+          >
             {car.brand}
-          </p>
+          </span>
 
-          <h3 className="mt-1 text-2xl font-bold text-gray-900">
+          <h2 className="mt-4 text-2xl font-black">
             {car.model}
-          </h3>
+          </h2>
 
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-[var(--foreground-muted)]">
             {car.title}
           </p>
         </div>
 
-        {/* Specifications */}
-        <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
+        {/* Specs */}
 
-          <div>
-            <p className="font-medium text-gray-900">{car.year}</p>
-            <p>Year</p>
+        <div
+          className="
+            grid
+            grid-cols-2
+            gap-3
+          "
+        >
+          <div className="rounded-2xl bg-[var(--surface-secondary)] p-4">
+            <Calendar
+              size={18}
+              className="mb-2 text-blue-600"
+            />
+
+            <p className="text-xs text-[var(--foreground-muted)]">
+              Year
+            </p>
+
+            <h3 className="font-bold">
+              {car.year}
+            </h3>
           </div>
 
-          <div>
-            <p className="font-medium text-gray-900">{car.fuel}</p>
-            <p>Fuel</p>
+          <div className="rounded-2xl bg-[var(--surface-secondary)] p-4">
+            <Fuel
+              size={18}
+              className="mb-2 text-blue-600"
+            />
+
+            <p className="text-xs text-[var(--foreground-muted)]">
+              Fuel
+            </p>
+
+            <h3 className="font-bold">
+              {car.fuel}
+            </h3>
           </div>
 
-          <div>
-            <p className="font-medium text-gray-900">
+          <div className="rounded-2xl bg-[var(--surface-secondary)] p-4">
+            <Gauge
+              size={18}
+              className="mb-2 text-blue-600"
+            />
+
+            <p className="text-xs text-[var(--foreground-muted)]">
+              Mileage
+            </p>
+
+            <h3 className="font-bold">
               {car.mileage.toLocaleString()} km
-            </p>
-            <p>Mileage</p>
+            </h3>
           </div>
 
-          <div>
-            <p className="font-medium text-gray-900">
+          <div className="rounded-2xl bg-[var(--surface-secondary)] p-4">
+            <Settings2
+              size={18}
+              className="mb-2 text-blue-600"
+            />
+
+            <p className="text-xs text-[var(--foreground-muted)]">
+              Gearbox
+            </p>
+
+            <h3 className="font-bold">
               {car.transmission}
-            </p>
-            <p>Transmission</p>
+            </h3>
           </div>
-
         </div>
 
-        {/* Location */}
-        <div className="flex items-center justify-between border-t pt-4">
+        {/* Footer */}
 
-          <div>
-            <p className="text-sm text-gray-500">Location</p>
+        <div
+          className="
+            flex
+            items-center
+            justify-between
 
-            <p className="font-semibold">
-              📍 {car.location}
-            </p>
+            border-t
+            border-[var(--border)]
+
+            pt-5
+          "
+        >
+          <div className="flex items-center gap-2">
+            <MapPin
+              size={18}
+              className="text-blue-600"
+            />
+
+            <span className="font-medium">
+              {car.location}
+            </span>
           </div>
 
-          <div className="text-right">
-            <p className="text-sm text-gray-500">Price</p>
-
-            <h2 className="text-2xl font-bold text-blue-600">
-              ৳ {car.price.toLocaleString()}
-            </h2>
-          </div>
-
+          <Link href={`/cars/${car._id}`}>
+            <Button className="gap-2">
+              Details
+              <ArrowRight size={17} />
+            </Button>
+          </Link>
         </div>
-
-        {/* Button */}
-        <Link href={`/cars/${car._id}`} className="block">
-          <Button className="w-full">
-            View Details
-          </Button>
-        </Link>
-
       </div>
-
-    </div>
+    </article>
   );
 };
 

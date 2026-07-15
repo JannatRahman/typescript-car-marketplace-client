@@ -35,35 +35,24 @@ const NavLinks = ({
       show: true,
     },
     {
-      name: "Explore Cars",
+      name: "Explore",
       href: "/explore-cars",
       icon: CarFront,
       show: true,
     },
     {
-      name: "Add Car",
+      name: "Sell Car",
       href: "/dashboard/add-car",
       icon: CirclePlus,
       show: !!user,
     },
     {
       name: "My Cars",
-      href: "/my-cars",
+      href: "/manage-cars",
       icon: ClipboardList,
       show: !!user,
     },
-    {
-      name: "About",
-      href: "/about",
-      icon: Info,
-      show: true,
-    },
-    {
-      name: "Contact",
-      href: "/contact",
-      icon: Mail,
-      show: true,
-    },
+    
   ];
 
   return (
@@ -90,45 +79,45 @@ const NavLinks = ({
                     items-center
                     gap-3
                     rounded-2xl
-                    px-4
+                    px-5
                     py-3
-
+                    text-base
                     font-medium
-
                     transition-all
-                    duration-200
+                    duration-300
 
                     ${
                       active
-                        ? "bg-[var(--primary)] text-white"
-                        : "text-[var(--foreground)] hover:bg-[var(--surface-secondary)]"
+                        ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg"
+                        : "text-[var(--foreground)] hover:bg-slate-100 dark:hover:bg-slate-800"
                     }
                   `
                   : `
+                    group
+                    relative
                     flex
                     items-center
                     gap-2
-
-                    rounded-xl
-
-                    px-4
-                    py-2
-
-                    text-sm
+                    rounded-full
+                    px-5
+                    py-2.5
+                    text-[15px]
                     font-semibold
-
                     transition-all
-                    duration-200
+                    duration-300
 
                     ${
                       active
-                        ? "bg-[var(--primary)] text-white shadow-md"
-                        : "text-[var(--foreground)] hover:bg-[var(--surface-secondary)] hover:text-[var(--primary)]"
+                        ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg"
+                        : "text-[var(--foreground)] hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600"
                     }
                   `
               }
             >
-              <Icon size={18} />
+              <Icon
+                size={18}
+                className="transition-transform duration-300 group-hover:scale-110"
+              />
 
               <span>{link.name}</span>
             </Link>

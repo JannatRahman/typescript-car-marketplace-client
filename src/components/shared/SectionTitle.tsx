@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 interface SectionTitleProps {
   badge?: string;
   title: string;
@@ -13,24 +15,80 @@ const SectionTitle = ({
 }: SectionTitleProps) => {
   return (
     <div
-      className={`mb-12 ${
-        center ? "mx-auto max-w-3xl text-center" : "max-w-3xl text-left"
-      }`}
+      className={clsx(
+        "mb-14",
+        center
+          ? "mx-auto max-w-3xl text-center"
+          : "max-w-3xl text-left"
+      )}
     >
       {badge && (
-        <span className="inline-flex rounded-full bg-blue-100 px-4 py-1 text-sm font-semibold text-blue-600">
-          {badge}
-        </span>
+        <div
+          className={clsx(
+            center ? "justify-center" : "justify-start",
+            "mb-5 flex"
+          )}
+        >
+          <span
+            className="
+            inline-flex
+            items-center
+
+            rounded-full
+
+            border
+            border-[var(--border)]
+
+            bg-[var(--surface-secondary)]
+
+            px-4
+            py-1.5
+
+            text-xs
+            font-bold
+            uppercase
+            tracking-[0.2em]
+
+            text-[var(--primary)]
+          "
+          >
+            {badge}
+          </span>
+        </div>
       )}
 
-      <h2 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
+      <h2
+        className="
+        text-4xl
+        font-extrabold
+        leading-tight
+        tracking-tight
+
+        text-[var(--foreground)]
+
+        md:text-5xl
+        lg:text-6xl
+      "
+      >
         {title}
       </h2>
 
       <p
-        className={`mt-5 text-lg leading-8 text-gray-600 ${
-          center ? "mx-auto max-w-2xl" : "max-w-2xl"
-        }`}
+        className={clsx(
+          center ? "mx-auto" : "",
+          `
+          mt-6
+
+          max-w-2xl
+
+          text-lg
+          leading-8
+
+          text-[var(--foreground-muted)]
+
+          md:text-xl
+          `
+        )}
       >
         {subtitle}
       </p>

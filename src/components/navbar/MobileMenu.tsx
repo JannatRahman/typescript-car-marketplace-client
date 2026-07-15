@@ -1,13 +1,19 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import Link from "next/link";
+import {
+  Menu,
+  X,
+  LogIn,
+  UserPlus,
+  Moon,
+} from "lucide-react";
+
 import NavLinks from "./NavLinks";
 import ThemeToggle from "./ThemeToggle";
-import Link from "next/link";
-import { useState } from "react";
 
-interface Props {
+interface MobileMenuProps {
   user: {
     name: string;
     email: string;
@@ -18,141 +24,264 @@ interface Props {
 const MobileMenu = ({
   user,
   logout,
-}: Props) => {
+}: MobileMenuProps) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      {/* Hamburger */}
+      {/* Menu Button */}
 
       <button
         onClick={() => setOpen(true)}
-        className="md:hidden"
+        className="
+        flex
+        h-11
+        w-11
+        items-center
+        justify-center
+
+        rounded-2xl
+
+        border
+        border-[var(--border)]
+
+        bg-[var(--card)]
+
+        transition
+
+        hover:bg-[var(--surface-secondary)]
+      "
       >
-        <Menu size={30} />
+        <Menu size={22} />
       </button>
 
-      <AnimatePresence>
+      {/* Overlay */}
 
-        {open && (
+      <div
+        className={`fixed inset-0 z-50 transition ${
+          open
+            ? "pointer-events-auto"
+            : "pointer-events-none"
+        }`}
+      >
+        {/* Background */}
 
-          <>
-            {/* Background */}
+        <div
+          onClick={() => setOpen(false)}
+          className={`
+            absolute
+            inset-0
+            bg-black/50
+            backdrop-blur-sm
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+            transition-opacity
+
+            ${
+              open
+                ? "opacity-100"
+                : "opacity-0"
+            }
+          `}
+        />
+
+        {/* Drawer */}
+
+        <div
+          className={`
+          absolute
+          right-0
+          top-0
+
+          flex
+          h-full
+          w-[320px]
+          flex-col
+
+          border-l
+          border-[var(--border)]
+
+         bg-white dark:bg-slate-950
+
+          shadow-2xl
+
+          transition-transform
+          duration-300
+
+          ${
+            open
+              ? "translate-x-0"
+              : "translate-x-full"
+          }
+        `}
+        >
+          {/* Header */}
+
+          <div className="flex items-center justify-between border-b border-[var(--border)] p-6">
+
+            <div>
+
+              <h2 className="text-xl font-bold">
+                Drive
+                <span className="text-[var(--primary)]">
+                  Mart
+                </span>
+              </h2>
+
+              <p className="text-sm text-[var(--muted)]">
+                Premium Marketplace
+              </p>
+
+            </div>
+
+            <button
               onClick={() => setOpen(false)}
-              className="fixed inset-0 z-40 bg-black/40"
+              className="rounded-xl p-2 hover:bg-[var(--surface-secondary)]"
+            >
+              <X size={22} />
+            </button>
+
+          </div>
+
+          {/* User */}
+
+          {user && (
+            <div className="border-b border-[var(--border)] p-6">
+
+              <div className="flex items-center gap-4">
+
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--primary)] text-lg font-bold text-white">
+                  {user.name.charAt(0)}
+                </div>
+
+                <div>
+
+                  <h3 className="font-semibold">
+                    {user.name}
+                  </h3>
+
+                  <p className="text-sm text-[var(--muted)]">
+                    {user.email}
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+          )}
+
+          {/* Navigation */}
+
+          <div className="flex-1 space-y-2 p-5">
+
+            <NavLinks
+              user={user}
+              mobile
+              onClick={() => setOpen(false)}
             />
 
-            {/* Drawer */}
+          </div>
 
-            <motion.div
-              initial={{
-                x: "100%",
-              }}
-              animate={{
-                x: 0,
-              }}
-              exit={{
-                x: "100%",
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 350,
-                damping: 35,
-              }}
-              className="fixed right-0 top-0 z-50 h-screen w-80 bg-[var(--card)] shadow-2xl"
-            >
-              {/* Header */}
+          {/* Bottom */}
 
-              <div className="flex items-center justify-between border-b border-[var(--border)] p-6">
+          <div className="space-y-4 border-t border-[var(--border)] p-5">
 
-                <h2 className="text-2xl font-bold">
-                  DriveMart
-                </h2>
+            <div className="flex items-center justify-between">
 
-                <button
+              <span className="font-medium">
+                Theme
+              </span>
+
+              <ThemeToggle />
+
+            </div>
+
+            {!user ? (
+              <div className="space-y-3">
+
+                <Link
+                  href="/login"
                   onClick={() => setOpen(false)}
+                  className="
+                  flex
+                  items-center
+                  justify-center
+                  gap-2
+
+                  rounded-xl
+
+                  border
+                  border-[var(--primary)]
+
+                  py-3
+
+                  font-semibold
+
+                  text-[var(--primary)]
+                "
                 >
-                  <X />
-                </button>
+                  <LogIn size={18} />
+                  Login
+                </Link>
 
-              </div>
-
-              {/* Navigation */}
-
-              <div className="space-y-2 p-6">
-
-                <NavLinks
-                  user={user}
-                  mobile
+                <Link
+                  href="/register"
                   onClick={() => setOpen(false)}
-                />
+                  className="
+                  flex
+                  items-center
+                  justify-center
+                  gap-2
+
+                  rounded-xl
+
+                  bg-[var(--primary)]
+
+                  py-3
+
+                  font-semibold
+
+                  text-white
+                "
+                >
+                  <UserPlus size={18} />
+                  Register
+                </Link>
 
               </div>
+            ) : (
+              <button
+                onClick={() => {
+                  logout();
+                  setOpen(false);
+                }}
+                className="
+                w-full
 
-              {/* Theme */}
+                rounded-xl
 
-              <div className="border-t border-[var(--border)] p-6">
+                bg-red-500
 
-                <ThemeToggle />
+                py-3
 
-              </div>
+                font-semibold
 
-              {/* Bottom */}
+                text-white
 
-              <div className="absolute bottom-0 w-full border-t border-[var(--border)] p-6">
+                transition
 
-                {user ? (
-                  <>
-                    <p className="font-bold">
-                      {user.name}
-                    </p>
+                hover:bg-red-600
+              "
+              >
+                Logout
+              </button>
+            )}
 
-                    <p className="mb-4 text-sm text-[var(--muted)]">
-                      {user.email}
-                    </p>
+          </div>
 
-                    <button
-                      onClick={logout}
-                      className="w-full rounded-xl bg-red-500 py-3 font-semibold text-white"
-                    >
-                      Logout
-                    </button>
-                  </>
-                ) : (
-                  <div className="space-y-3">
+        </div>
 
-                    <Link
-                      href="/login"
-                      onClick={() => setOpen(false)}
-                      className="block rounded-xl border py-3 text-center"
-                    >
-                      Login
-                    </Link>
-
-                    <Link
-                      href="/register"
-                      onClick={() => setOpen(false)}
-                      className="block rounded-xl bg-[var(--primary)] py-3 text-center text-white"
-                    >
-                      Register
-                    </Link>
-
-                  </div>
-                )}
-
-              </div>
-
-            </motion.div>
-
-          </>
-        )}
-
-      </AnimatePresence>
+      </div>
     </>
   );
 };

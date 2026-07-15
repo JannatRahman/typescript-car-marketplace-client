@@ -1,7 +1,6 @@
 
 import { Car } from "@/types/car";
 
-
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface GetCarsParams {
@@ -62,18 +61,7 @@ export const getCars = async ({
   return res.json();
 };
 
-export const getMyCars = async () => {
-  const res = await fetch(`${API_URL}/my-cars`, {
-    credentials: "include",
-    cache: "no-store",
-  });
 
-  const data = await res.json();
-
-  console.log("SERVICE RESPONSE:", data);
-
-  return data;
-};
 
 export const getSingleCar = async (id: string) => {
   const res = await fetch(`${API_URL}/cars/${id}`, {

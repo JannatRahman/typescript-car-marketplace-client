@@ -3,11 +3,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import {
   CarFront,
-  ClipboardList,
   LayoutDashboard,
   LogOut,
   PlusCircle,
-  UserCircle2,
+  Settings,
+  UserRound,
+  ChevronDown,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -28,7 +29,7 @@ const ProfileDropdown = ({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClick = (event: MouseEvent) => {
+    const clickOutside = (event: MouseEvent) => {
       if (
         ref.current &&
         !ref.current.contains(event.target as Node)
@@ -37,51 +38,87 @@ const ProfileDropdown = ({
       }
     };
 
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpen(false);
-      }
-    };
-
     document.addEventListener(
       "mousedown",
-      handleClick
+      clickOutside
     );
 
-    document.addEventListener(
-      "keydown",
-      handleEscape
-    );
-
-    return () => {
+    return () =>
       document.removeEventListener(
         "mousedown",
-        handleClick
+        clickOutside
       );
-
-      document.removeEventListener(
-        "keydown",
-        handleEscape
-      );
-    };
   }, []);
 
   return (
     <div
-      className="relative"
       ref={ref}
+      className="relative"
     >
+      {/* Avatar Button */}
+
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--card)] px-2 py-2 shadow-sm hover:shadow-md"
+        className="
+        flex
+        items-center
+        gap-3
+
+        rounded-full
+
+        border
+        border-[var(--border)]
+
+        bg-[var(--card)]
+
+        px-2
+        py-2
+
+        transition-all
+        duration-300
+
+        hover:shadow-lg
+        hover:border-[var(--primary)]
+        "
       >
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary)] font-bold text-white">
-          {name.charAt(0)}
+        <div
+          className="
+          flex
+          h-11
+          w-11
+          items-center
+          justify-center
+
+          rounded-full
+
+          bg-gradient-to-br
+          from-[var(--primary)]
+          to-blue-500
+
+          text-lg
+          font-bold
+          text-white
+          "
+        >
+          {name.charAt(0).toUpperCase()}
         </div>
 
-        <span className="hidden font-medium lg:block">
-          {name}
-        </span>
+        <div className="hidden text-left lg:block">
+          <p className="font-semibold leading-none">
+            {name}
+          </p>
+
+          <p className="text-xs text-[var(--muted)]">
+            View Profile
+          </p>
+        </div>
+
+        <ChevronDown
+          size={18}
+          className={`transition ${
+            open ? "rotate-180" : ""
+          }`}
+        />
       </button>
 
       <AnimatePresence>
@@ -89,8 +126,8 @@ const ProfileDropdown = ({
           <motion.div
             initial={{
               opacity: 0,
-              y: -10,
-              scale: 0.95,
+              y: 15,
+              scale: 0.97,
             }}
             animate={{
               opacity: 1,
@@ -99,70 +136,148 @@ const ProfileDropdown = ({
             }}
             exit={{
               opacity: 0,
-              y: -10,
-              scale: 0.95,
+              y: 15,
+              scale: 0.97,
             }}
             transition={{
-              duration: 0.2,
+              duration: 0.18,
             }}
-            className="absolute right-0 mt-4 w-72 rounded-3xl border border-[var(--border)] bg-[var(--card)] p-4 shadow-2xl"
+            className="
+            absolute
+            right-0
+            mt-4
+            w-80
+
+            overflow-hidden
+
+            rounded-3xl
+
+            border
+            border-[var(--border)]
+
+            bg-[var(--card)]
+
+            shadow-2xl
+            "
           >
-            <div className="flex items-center gap-3">
-              <UserCircle2
-                size={46}
-                className="text-[var(--primary)]"
-              />
+            {/* Header */}
 
-              <div>
-                <h3 className="font-bold">
-                  {name}
-                </h3>
+            <div className="bg-gradient-to-r from-[var(--primary)] to-blue-500 p-6 text-white">
 
-                <p className="text-sm text-[var(--muted)]">
-                  {email}
-                </p>
+              <div className="flex items-center gap-4">
+
+                <div
+                  className="
+                  flex
+                  h-16
+                  w-16
+                  items-center
+                  justify-center
+
+                  rounded-full
+
+                  bg-white/20
+
+                  text-2xl
+                  font-bold
+                  backdrop-blur
+                  "
+                >
+                  {name.charAt(0).toUpperCase()}
+                </div>
+
+                <div>
+                  <h2 className="text-lg font-bold">
+                    {name}
+                  </h2>
+
+                  <p className="text-sm text-white/80">
+                    {email}
+                  </p>
+                </div>
+
               </div>
+
             </div>
 
-            <div className="my-4 h-px bg-[var(--border)]" />
+            {/* Menu */}
 
-            <div className="space-y-2">
+            <div className="space-y-2 p-4">
 
               <Link
                 href="/dashboard"
-                className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="flex items-center gap-4 rounded-2xl px-4 py-3 transition hover:bg-[var(--surface-secondary)]"
               >
-                <LayoutDashboard size={18} />
+                <LayoutDashboard size={20} />
                 Dashboard
               </Link>
 
               <Link
-                href="/my-cars"
-                className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800"
+                href="/manage-cars"
+                className="flex items-center gap-4 rounded-2xl px-4 py-3 transition hover:bg-[var(--surface-secondary)]"
               >
-                <ClipboardList size={18} />
-                My Cars
+                <CarFront size={20} />
+                Manage Cars
               </Link>
 
               <Link
                 href="/dashboard/add-car"
-                className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="flex items-center gap-4 rounded-2xl px-4 py-3 transition hover:bg-[var(--surface-secondary)]"
               >
-                <PlusCircle size={18} />
+                <PlusCircle size={20} />
                 Add Car
+              </Link>
+
+              <Link
+                href="#"
+                className="flex items-center gap-4 rounded-2xl px-4 py-3 transition hover:bg-[var(--surface-secondary)]"
+              >
+                <Settings size={20} />
+                Settings
+              </Link>
+
+              <Link
+                href="#"
+                className="flex items-center gap-4 rounded-2xl px-4 py-3 transition hover:bg-[var(--surface-secondary)]"
+              >
+                <UserRound size={20} />
+                My Profile
               </Link>
 
             </div>
 
-            <div className="my-4 h-px bg-[var(--border)]" />
+            <div className="border-t border-[var(--border)] p-4">
 
-            <button
-              onClick={onLogout}
-              className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-950"
-            >
-              <LogOut size={18} />
-              Logout
-            </button>
+              <button
+                onClick={onLogout}
+                className="
+                flex
+                w-full
+                items-center
+                justify-center
+                gap-3
+
+                rounded-2xl
+
+                bg-red-500
+
+                px-4
+                py-3
+
+                font-semibold
+                text-white
+
+                transition
+
+                hover:bg-red-600
+                "
+              >
+                <LogOut size={18} />
+                Logout
+              </button>
+
+            </div>
+
           </motion.div>
         )}
       </AnimatePresence>

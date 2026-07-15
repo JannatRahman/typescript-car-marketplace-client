@@ -1,9 +1,10 @@
 import clsx from "clsx";
+import React from "react";
 
 interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "danger";
 }
 
 export default function Button({
@@ -20,37 +21,49 @@ export default function Button({
         inline-flex
         items-center
         justify-center
+        gap-2
 
-        rounded-2xl
+        rounded-xl
 
         px-6
         py-3
 
+        text-sm
         font-semibold
 
+        cursor-pointer
+        select-none
+
         transition-all
-        duration-200
+        duration-300
 
+        active:scale-[0.98]
+        hover:-translate-y-0.5
+
+        focus:outline-none
+        focus:ring-2
+        focus:ring-[var(--primary)]
+        focus:ring-offset-2
+        focus:ring-offset-[var(--background)]
+
+        disabled:pointer-events-none
         disabled:opacity-50
-        disabled:cursor-not-allowed
+        disabled:translate-y-0
+        disabled:scale-100
         `,
-        variant === "primary"
-          ? `
-            bg-[var(--primary)]
-            text-white
+        {
+          // Primary
+          "bg-[var(--primary)] text-white shadow-lg hover:brightness-110 hover:shadow-xl":
+            variant === "primary",
 
-            hover:bg-blue-700
-            `
-          : `
-            border
-            border-[var(--border)]
+          // Secondary
+          "border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] shadow-sm hover:bg-[var(--surface-secondary)] hover:shadow-md":
+            variant === "secondary",
 
-            bg-[var(--surface)]
-
-            text-[var(--foreground)]
-
-            hover:bg-[var(--surface-secondary)]
-            `,
+          // Danger
+          "bg-[var(--danger)] text-white shadow-lg hover:brightness-110 hover:shadow-xl":
+            variant === "danger",
+        },
         className
       )}
     >

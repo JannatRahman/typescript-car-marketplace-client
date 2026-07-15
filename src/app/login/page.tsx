@@ -2,18 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { toast } from "react-toastify";
+
 import AuthLayout from "@/components/auth/AuthLayout";
 import Button from "@/components/shared/Button";
-
-
-import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/useAuth";
 
 const loginSchema = z.object({
@@ -36,7 +35,6 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -61,49 +59,109 @@ export default function LoginPage() {
     router.push("/");
   };
 
- 
-
   return (
     <AuthLayout
       title="Welcome Back"
       subtitle="Login to your DriveMart account."
-      
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-6"
       >
+        {/* Email */}
+
         <div>
-          <label className="mb-2 block font-medium">
-            Email
+
+          <label className="mb-2 block font-semibold">
+            Email Address
           </label>
 
-          <input
-            {...register("email")}
-            className="w-full rounded-xl border px-4 py-3"
-          />
+          <div className="relative">
+
+            <Mail
+              size={18}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--foreground-muted)]"
+            />
+
+            <input
+              type="email"
+              placeholder="you@example.com"
+              {...register("email")}
+              className="
+                w-full
+
+                rounded-2xl
+
+                border
+                border-[var(--border)]
+
+                bg-[var(--surface-secondary)]
+
+                py-3
+                pl-11
+                pr-4
+
+                outline-none
+
+                transition
+
+                focus:border-[var(--primary)]
+              "
+            />
+
+          </div>
 
           {errors.email && (
             <p className="mt-2 text-sm text-red-500">
               {errors.email.message}
             </p>
           )}
+
         </div>
 
+        {/* Password */}
+
         <div>
-          <label className="mb-2 block font-medium">
+
+          <label className="mb-2 block font-semibold">
             Password
           </label>
 
           <div className="relative">
+
+            <Lock
+              size={18}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--foreground-muted)]"
+            />
+
             <input
               type={
                 showPassword
                   ? "text"
                   : "password"
               }
+              placeholder="Enter your password"
               {...register("password")}
-              className="w-full rounded-xl border px-4 py-3 pr-12"
+              className="
+                w-full
+
+                rounded-2xl
+
+                border
+                border-[var(--border)]
+
+                bg-[var(--surface-secondary)]
+
+                py-3
+                pl-11
+                pr-12
+
+                outline-none
+
+                transition
+
+                focus:border-[var(--primary)]
+              "
             />
 
             <button
@@ -111,14 +169,26 @@ export default function LoginPage() {
               onClick={() =>
                 setShowPassword(!showPassword)
               }
-              className="absolute right-4 top-1/2 -translate-y-1/2"
+              className="
+                absolute
+                right-4
+                top-1/2
+                -translate-y-1/2
+
+                text-[var(--foreground-muted)]
+
+                transition
+
+                hover:text-[var(--primary)]
+              "
             >
               {showPassword ? (
-                <EyeOff size={20} />
+                <EyeOff size={19} />
               ) : (
-                <Eye size={20} />
+                <Eye size={19} />
               )}
             </button>
+
           </div>
 
           {errors.password && (
@@ -126,27 +196,33 @@ export default function LoginPage() {
               {errors.password.message}
             </p>
           )}
+
         </div>
+
+        {/* Login Button */}
 
         <Button
           type="submit"
           className="w-full"
           disabled={loading}
         >
-          {loading ? "Signing In..." : "Login"}
+          {loading
+            ? "Signing In..."
+            : "Login"}
         </Button>
 
-        
+        {/* Footer */}
 
-        <p className="text-center text-gray-600">
+        <p className="text-center text-sm text-[var(--foreground-muted)]">
           Don't have an account?{" "}
           <Link
             href="/register"
-            className="font-semibold text-blue-600"
+            className="font-bold text-[var(--primary)] transition hover:underline"
           >
-            Register
+            Create one
           </Link>
         </p>
+
       </form>
     </AuthLayout>
   );
