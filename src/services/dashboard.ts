@@ -1,3 +1,7 @@
+"use server";
+
+import { cookies } from "next/headers";
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export interface DashboardData {
@@ -23,9 +27,14 @@ interface DashboardResponse {
 }
 
 export const getDashboard = async (): Promise<DashboardResponse> => {
+  const cookieStore = await cookies();
+
   const res = await fetch(`${API_URL}/dashboard`, {
     credentials: "include",
     cache: "no-store",
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
   });
 
   if (!res.ok) {

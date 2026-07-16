@@ -33,11 +33,11 @@ const ManageCarsPage = async () => {
             </h2>
 
             <p className="mx-auto mt-4 max-w-md leading-7 text-[var(--muted)]">
-              You haven't listed any vehicles yet. Start selling by adding your
+              You have not listed any vehicles yet. Start selling by adding your
               first car to the marketplace.
             </p>
 
-            <Link href="/add-car" className="mt-8 inline-block">
+            <Link href="/dashboard/add-car" className="mt-8 inline-block">
               <Button>Add Your First Car</Button>
             </Link>
           </div>

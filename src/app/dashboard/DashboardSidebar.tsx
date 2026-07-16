@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 
 import { useAuth } from "@/hooks/useAuth";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 const links = [
   {
@@ -40,12 +42,26 @@ export default function DashboardSidebar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { user, logout } = useAuth();
+  
 
-  const handleLogout = async () => {
-    await logout();
-    router.push("/");
-  };
+    const handleLogout = async () => {
+      try {
+        await authClient.signOut({
+          fetchOptions: {
+            onSuccess: () => {
+              router.push("/");
+              router.refresh();
+            },
+          },
+        });
+      } catch (err) {
+        if(err){
+               toast.error('something is Wrong') 
+              }
+        // console.error("Logout failed:", error);
+      }
+      
+    };
 
   return (
     <aside

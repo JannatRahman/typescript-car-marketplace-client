@@ -1,4 +1,6 @@
+"use server";
 
+import { cookies } from "next/headers";
 import { Car } from "@/types/car";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -25,6 +27,7 @@ interface CarsResponse {
   };
 }
 
+
 export const getCars = async ({
   search = "",
   brand = "",
@@ -34,17 +37,12 @@ export const getCars = async ({
   page = 1,
   limit = 12,
 }: GetCarsParams = {}): Promise<CarsResponse> => {
-
   const query = new URLSearchParams();
 
   if (search) query.set("search", search);
-
   if (brand) query.set("brand", brand);
-
   if (fuel) query.set("fuel", fuel);
-
   if (condition) query.set("condition", condition);
-
   if (sort) query.set("sort", sort);
 
   query.set("page", page.toString());
@@ -62,7 +60,6 @@ export const getCars = async ({
 };
 
 
-
 export const getSingleCar = async (id: string) => {
   const res = await fetch(`${API_URL}/cars/${id}`, {
     cache: "no-store",
@@ -75,24 +72,21 @@ export const getSingleCar = async (id: string) => {
   return res.json();
 };
 
+
 export const addCar = async (car: Omit<Car, "_id">) => {
-  console.log("API_URL:", API_URL);
-  console.log("Sending to:", `${API_URL}/cars`);
+  const cookieStore = await cookies();
 
   const res = await fetch(`${API_URL}/cars`, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      Cookie: cookieStore.toString(),
     },
     body: JSON.stringify(car),
   });
 
-  console.log("Status:", res.status);
-
   const data = await res.json();
-
-  console.log("Response:", data);
 
   if (!res.ok) {
     throw new Error(data.message || "Failed to add car");
@@ -101,35 +95,49 @@ export const addCar = async (car: Omit<Car, "_id">) => {
   return data;
 };
 
+
 export const updateCar = async (
   id: string,
   car: Partial<Omit<Car, "_id">>
 ) => {
+  const cookieStore = await cookies();
+
   const res = await fetch(`${API_URL}/cars/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      Cookie: cookieStore.toString(),
     },
     credentials: "include",
     body: JSON.stringify(car),
   });
 
+  const data = await res.json();
+
   if (!res.ok) {
-    throw new Error("Failed to update car");
+    throw new Error(data.message || "Failed to update car");
   }
 
-  return res.json();
+  return data;
 };
 
+
 export const deleteCar = async (id: string) => {
+  const cookieStore = await cookies();
+
   const res = await fetch(`${API_URL}/cars/${id}`, {
     method: "DELETE",
     credentials: "include",
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
   });
 
+  const data = await res.json();
+
   if (!res.ok) {
-    throw new Error("Failed to delete car");
+    throw new Error(data.message || "Failed to delete car");
   }
 
-  return res.json();
+  return data;
 };

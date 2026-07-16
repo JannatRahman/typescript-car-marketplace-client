@@ -1,3 +1,6 @@
+"use server";
+
+import { cookies } from "next/headers";
 import {
   AuthResponse,
   LoginData,
@@ -5,6 +8,7 @@ import {
 } from "@/types/auth";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 
 export const registerUser = async (
   userData: RegisterData
@@ -20,6 +24,7 @@ export const registerUser = async (
 
   return res.json();
 };
+
 
 export const loginUser = async (
   userData: LoginData
@@ -37,18 +42,28 @@ export const loginUser = async (
 };
 
 export const logoutUser = async (): Promise<AuthResponse> => {
+  const cookieStore = await cookies();
+
   const res = await fetch(`${API_URL}/logout`, {
     method: "POST",
     credentials: "include",
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
   });
 
   return res.json();
 };
 
 export const getCurrentUser = async (): Promise<AuthResponse> => {
+  const cookieStore = await cookies();
+
   const res = await fetch(`${API_URL}/me`, {
     credentials: "include",
     cache: "no-store",
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
   });
 
   return res.json();

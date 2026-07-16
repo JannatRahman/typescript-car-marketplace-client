@@ -3,15 +3,44 @@
 import Link from "next/link";
 import { CarFront } from "lucide-react";
 
-import { useAuth } from "@/hooks/useAuth";
+
 
 import MobileMenu from "./MobileMenu";
 import NavLinks from "./NavLinks";
 import ProfileDropdown from "./ProfileDropdown";
 import ThemeToggle from "./ThemeToggle";
+import { useClientSession } from "@/services/session";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const { user, logout, loading } = useAuth();
+ const router = useRouter()
+  const {user, isPending, } = useClientSession()
+  console.log(user);
+  
+    const handleLogout = async () => {
+    try {
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            router.push("/");
+            router.refresh();
+          },
+        },
+      });
+    } catch (err) {
+      if(err){
+             toast.error('something is Wrong') 
+            }
+      // console.error("Logout failed:", error);
+    }
+    
+  };
+    
+
+
+
 
   return (
     <header
@@ -130,7 +159,7 @@ const Navbar = () => {
         <div className="hidden items-center gap-4 lg:flex">
           <ThemeToggle />
 
-          {loading ? (
+          {isPending ? (
             <div
               className="
                 h-10
@@ -145,9 +174,9 @@ const Navbar = () => {
             />
           ) : user ? (
             <ProfileDropdown
-              name={user.name}
-              email={user.email}
-              onLogout={logout}
+              name={user?.name}
+              email={user?.email}
+              onLogout={handleLogout}
             />
           ) : (
             <div className="flex items-center gap-3">
@@ -209,10 +238,10 @@ const Navbar = () => {
 
         {/* Mobile */}
 
-        <div className="lg:hidden">
+        <div className="lg:hidden z-50">
           <MobileMenu
             user={user}
-            logout={logout}
+            logout={handleLogout}
           />
         </div>
       </div>
